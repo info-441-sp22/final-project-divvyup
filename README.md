@@ -16,17 +16,13 @@ We as developers want to build this application because as students we often dea
 #### Feature Priorities
 | Priority | User | Description | Technical Implementation |
 |---|---|---|---|
-|P0 | As the primary purchaser | I want to create a shopping trip session |
-|P0 | As a joint purchaser | I want to join a shopping trip session |
-|P1 | As a joint purchaser | I want to be able to add/remove items into the shopping list |
-|P2 | As a joint purchaser | I want to be able to add myself to a item on the shopping list |
-|P3 | As the primary purchaser | I want to be able to input costs of items |
-|P4 | As the primary  purchaser | I want to be able to get the subtotal for each joint purchaser |
-|P5 | As the primary purchaser | I want to be able to charge each joint purchaser by their calculated subtotal via online payment | 
-
-
-
-
+| P0 | As the primary purchaser | I want to create a shopping trip session | Have a post request that creates a new table in the database which houses users and a new shopping list for the group of users |
+| P0 | As a joint purchaser | I want to join a shopping trip session | Have some sort of logic that puts the join purchaser into the shopping session if both the primary and join purchaser agree |
+| P1 | As a joint purchaser | I want to be able to add/remove items into the shopping list | Have a post and delete request to allow all users in a group to freely add and remove items from the shopping list |
+| P2 | As a joint purchaser | I want to be able to add myself to a item on the shopping list | For the shopping list, have some fields which holds users to exclude users who will not use the item from the final bill | 
+| P3 | As the primary purchaser | I want to be able to input costs of items | Have a post request that allows the user to change the price of the items on the shopping list | 
+| P4 | As the primary  purchaser | I want to be able to get the subtotal for each joint purchaser | Have a get request which displays information on the bill |
+| P5 | As the primary purchaser | I want to be able to charge each joint purchaser by their calculated subtotal via online payment | Have some system which automatically sends a payment request with the appropriate amount. |
 
 
 ## API Endpoints
