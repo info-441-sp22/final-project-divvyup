@@ -1,4 +1,5 @@
 # DivvyUp
+Project Members: Ian Wang, Mark Zhang, Jason Nguyen, Yash Katwal
 
 ## Project Description
 DivvyUp is a spending management application focused towards making splitting purchases among groups of individuals easier. Users will be able to add to a joint spending list and thereafter split the cost of the purchase by each individual.
@@ -42,34 +43,39 @@ We as developers want to build this application because as students we often dea
 * POST
     * `/add `
         * Add a new user to the database and redirect to home page
-    * `/delete`
-        * Delete an existing user from the database and redirect to home page
     * `/additem`
         * Add a grocery item to the current user
-    * `/removeitem`
-        * Remove a grocery item from the current user’s shopping list
 * GET
     * `/items/user (param: ?user=)`
         * return all items purchased from the current user
+* DELETE
+    * `/delete`
+        * Delete an existing user from the database and redirect to home page
+     * `/removeitem`
+        * Remove a grocery item from the current user’s shopping list
 
 #### Groups: /v1/groups/
 * POST
-    * `/add`
+    * `/add (param?temp=bool)`
         * Add a new user group to the database
     * `/adduser (param?user=)`
         * Add the specified user to the user group in the database
 * GET
     * `/users`
-        * Return all user IDs in the user group    
+        * Return all user IDs in the user group
+* DELETE
+    * `/remove`
+        * Remove group in the database    
         
-#### Shoppers: /v1/shopper
+#### Purchasers: /v1/purchasers/
 * POST
     * `/uploadprice`
         * Update price for items in shopping list in the database
-    * `/removeitem `
+* DELETE
+     * `/removeitem `
         * Removes grocery item if item is unavailable 
 
-#### Purchases: /v1/purchase/
+#### Receipt: /v1/receipt/
 * GET
     * `/price`
         * Get price for every item in shopping list in the database
