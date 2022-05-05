@@ -1,6 +1,7 @@
 # DivvyUp
+
 ## Project Description
-DivvyUp is a spending management application focused towards making splitting purchases among groups of individuals easier. Users will be able to add to a joint spending list and thereafter splitthe cost of the purchase by each individual.
+DivvyUp is a spending management application focused towards making splitting purchases among groups of individuals easier. Users will be able to add to a joint spending list and thereafter split the cost of the purchase by each individual.
 
 DivvyUp will be used in settings where there is one person making a purchase for a group of people. Prior to a purchase, individuals can add items to a joint purchase list. Users added in the shopping trip can choose what they wish to pay for within the joint purchase list and add their names to items. At the end of the trip, the person handling the transaction will input the total price for each item. The application will then calculate the subtotal cost for each person in the shopping trip. This allows the one person making the purchases to easily calculate the subtotal and charge others. 
 
