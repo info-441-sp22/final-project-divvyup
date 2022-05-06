@@ -40,32 +40,38 @@ We as developers want to build this application because as students we often dea
     * Deny access if login is not made with UW NetID Account
 
 #### Users: /v1/users/
+* GET
+    * `/name`
+        * Returns name of user
+    * `/primary`
+        * Returns boolean whether user is a primary purchaser (otherwise joint)
+    * `/items/user (param:?user=)`
+        * return all items purchased from the current user
 * POST
     * `/add `
         * Add a new user to the database and redirect to home page
     * `/additem`
         * Add a grocery item to the current user
-* GET
-    * `/items/user (param: ?user=)`
-        * return all items purchased from the current user
 * DELETE
-    * `/delete`
-        * Delete an existing user from the database and redirect to home page
+     * `/delete`
+        * Delete an existing user from the shopping list and redirect to home page
      * `/removeitem`
         * Remove a grocery item from the current user’s shopping list
 
-#### Groups: /v1/groups/
-* POST
-    * `/add (param?temp=bool)`
-        * Add a new user group to the database
-    * `/adduser (param?user=)`
-        * Add the specified user to the user group in the database
+#### Trip: /v1/trip/
 * GET
     * `/users`
         * Return all user IDs in the user group
+* POST
+    * `/add (param?temp=bool)`
+        * Add a new user group to the database
+    * `/join (param?user=)`
+        * Add the specified user to the user group in the database
 * DELETE
     * `/remove`
         * Remove group in the database    
+    * `/leave`
+        * Remove the specified user from the user group in the database
         
 #### Purchasers: /v1/purchasers/
 * POST
