@@ -17,11 +17,12 @@ router.post('/add', async function(req, res, next){
         console.log("poop1")
         const newTrip = new req.models.Trip({
             PrimaryUserEmail : session.account.username,
+            ShoppingList: [],
             Users : [[session.account.username, session.account.name]]
         })
         console.log(newTrip)
         await newTrip.save()
-        res.json({status:'success'});
+        res.json({status:'success', ID: newTrip._id});
         console.log("poop2")
     } catch (error) {
         res.status(500).send(error);
@@ -53,14 +54,18 @@ router.post('/addUser', async function (req, res, next){
     }
 })
 
-// this get method returns the session (trip) ID
-router.get('/tripID', async function(req, res, next){
-    try {
-        res.send()
-    } catch(error) {
-        res.status(500).send(error)
-    }
-})
+//this get method returns the session (trip) ID
+// router.get('/tripID', async function(req, res, next){
+//     let session = req.session
+//     let trip = await req.models.Trip.findById(req.query.tripID)
+//     console.log(trip)
+//     try {
+//         res.json({tripID : "12345"})
+//     } catch(error) {
+//         console.log(error)
+//         res.status(500).send(error)
+//     }
+// })
 
 // this delete method removes a trip from the mongoDB database
 router.delete('/delete', async function(req, res, next){

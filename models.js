@@ -13,12 +13,13 @@ async function dbConnect() {
     // set up schemas and models
     const tripSchema = new mongoose.Schema({
         Users : [[String, String]],
-        //ShoppingList : [{type: mongoose.Schema.Types.ObjectId, ref: "List"}],
+        ShoppingList : [{type: mongoose.Schema.Types.ObjectId, ref: "List"}],
         PrimaryUserEmail : String
     })
     models.Trip = mongoose.model("Trip", tripSchema)
 
     const listSchema = new mongoose.Schema({
+        tripID : String,
         NameOfItem : String,
         UserEmails : [String],
         Quantity : Number,
