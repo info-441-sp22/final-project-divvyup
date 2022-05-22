@@ -8,26 +8,47 @@ router.get('/', async function(req, res, next) {
     } catch (error) {
         res.status(500).send(error)
     }
-})
+});
 
-// this post method adds a new trip to the mongoDB database
+// add a shopping trip
 router.post('/add', async function(req, res, next){
-    
+    let session = req.session
     try {
-        const firstPerson = new req.models.User({
-            Name : "testName",
-            Email : "testEmail@gmail.com"
-        })
-        await firstPerson.save()
         console.log("poop1")
         const newTrip = new req.models.Trip({
-            Users: [firstPerson],
-            PrimaryUserEmail : "testEmail@gmail.com"
+            PrimaryUserEmail : session.account.username,
+            Users : [[session.account.username, session.account.name]]
         })
+        console.log(newTrip)
         await newTrip.save()
         res.json({status:'success'});
         console.log("poop2")
     } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+// add a user to shopping trip
+router.post('/addUser', async function (req, res, next){
+    let session = req.session
+    try {
+        console.log("start")
+        console.log(req.body.tripID)
+        let trip = await req.models.Trip.findById(req.body.tripID)
+        console.log(trip);
+        let flag = true
+        for (let i = 0; i < trip.Users.length; i++) {
+            if (trip.Users[i].includes(session.account.username)) {
+                flag = false
+                break;
+            } 
+        }
+        if(flag){
+            trip.Users.push([session.account.username, session.account.name])
+        }
+        await trip.save()
+        res.json({status:'success'});
+    } catch(error) {
         res.status(500).send(error);
     }
 })
@@ -35,7 +56,7 @@ router.post('/add', async function(req, res, next){
 // this get method returns the session (trip) ID
 router.get('/tripID', async function(req, res, next){
     try {
-        console.log("aw man")
+        res.send()
     } catch(error) {
         res.status(500).send(error)
     }
@@ -47,7 +68,7 @@ router.delete('/delete', async function(req, res, next){
         let tripID = req.query.tripID
         //Only allow deletion if it's the primary user
         //let trip = await req.models.trip.findById(tripID)
-        //if(trip.PrimaryUserEmail == req.session.account.username){
+        //if(trip.PrimaryUserEmail == session.account.username){
             await req.models.Trip.deleteOne({_id:tripID})
             res.json({status:'success'});
         //}
