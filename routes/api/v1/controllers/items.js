@@ -84,11 +84,16 @@ router.post('/add?', async function (req, res, next) {
 router.post('/addPrice', async function (req, res, next) {
     try {
         if(req.session.isAuthenticated == true){
-            let lists = await req.models.List.findById(req.query.itemID)
-            let price = req.query.price
-            lists.Price = price
-            await lists.save()
-            res.json({status:'success'});
+            let tripID = req.query.tripID
+            //Only allow price upload if it's the primary user
+            let trip = await req.models.Trip.findById(tripID)
+            if(trip.PrimaryUserEmail === session.account.username){
+                let lists = await req.models.List.findById(req.query.itemID)
+                let price = req.query.price
+                lists.Price = price
+                await lists.save()
+                res.json({status:'success'});
+            }
         }else{
             res.status(401).json({
                 tatus: "error",
