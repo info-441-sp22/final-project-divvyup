@@ -47,7 +47,7 @@ app.use(sessions({
 }))
 const msid = new msIdExpress.WebAppAuthClientBuilder(appSettings).build();
 app.use(msid.initialize());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use((req, res, next) => {
     req.models = models
     next();
@@ -71,6 +71,10 @@ app.get('/unauthorized', (req, res) => {
 app.get('/error', (req, res) => {
     res.type('txt')
     res.send("There was a server error");
+})
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client/build", "index.html"))
 })
 
 export default app;
