@@ -5,16 +5,23 @@ var router = express.Router();
 // returns the entire shopping list
 router.get('/receipt', async function (req, res, next) {
     try {
+        let receipt = await req.models.List.find({tripID : req.query.tripID})
         
+        res.json(receipt)
     } catch(error) {
         res.status(500).send(error);
     }
 })
 
 // returns whether an item was bought
-router.get('/bought', async function (req, res, next) {
+router.post('/bought', async function (req, res, next) {
     try {
-        
+        console.log(`itemID: ${req.query.itemID}`)
+        let lists = await req.models.List.findById(req.query.itemID)
+        console.log(`list: ${lists}`)
+        lists.Bought = true
+        lists.save()
+        res.json({status:'success'});
     } catch(error) {
         res.status(500).send(error);
     }
@@ -28,7 +35,7 @@ router.post('/add?', async function (req, res, next) {
         console.log(req.query.quantity)
         console.log(req.query.tripID)
 
-        let lists = await req.models.List.find({NameOfItem : req.query.item, SessionID : req.query.tripID})
+        let lists = await req.models.List.find({NameOfItem : req.query.item, tripID : req.query.tripID})
         
         if (lists.length == 0) {
             const shoppinglist = new req.models.List({
@@ -59,6 +66,7 @@ router.post('/add?', async function (req, res, next) {
 // addPrice
 router.post('/addPrice', async function (req, res, next) {
     try {
+        let lists = await req.models.List.findById(req.query.itemID)
         
     } catch(error) {
         res.status(500).send(error);
