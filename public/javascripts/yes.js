@@ -13,6 +13,23 @@ async function test() {
     })
 }
 
+async function deleteTrip(tripID) {
+    try {
+        fetch(`api/${apiVersion}/trips/delete?tripID=${tripID}`, {
+            method: "DELETE"
+        })
+        .then(response => {
+            response.json().then((response) => {
+                console.log(response)
+            })
+        }).catch(err => {
+            console.log(err)
+        })
+    } catch(error) {
+        throw(error)
+    }
+}
+
 async function joinTrip() {
     let tripID = document.getElementById("idInput").value;
     console.log(tripID)
@@ -44,32 +61,40 @@ async function showReceipt(tripID){
         let receipt = await fetchJSON(`api/${apiVersion}/items/receipt?tripID=${tripID}`)
         document.getElementById("receipt").innerText = ''
         let receiptDiv = document.getElementById("receipt")
-        var button 
+        var button
+        var uploadPriceButton 
         for (let i = 0; i < receipt.length; i++) {
             document.getElementById("receipt").innerHTML += `${receipt[i].NameOfItem}:${receipt[i].Quantity}
             <br />`
             button = document.createElement('button');
+            button.className = "btn"
             button.id = receipt[i]._id;
             button.innerText = "Buy"
-            button.addEventListener("click", async function(){
-                console.log("button clicked")
+            receiptDiv.appendChild(button);
+
+            // uploadPriceButton = document.createElement('button');
+            // uploadPriceButton.id = "upload" + receipt[i]._id;
+            // uploadPriceButton.innerText = "Upload Price"
+            // uploadPriceButton.addEventListener("click", async function(){
+            //     console.log("button clicked")
+            //     await fetchJSON(`api/${apiVersion}/items/addPrice?itemID=${receipt[i]._id}`, {
+            //         method: "POST"
+            //     })
+            // })
+            // receiptDiv.appendChild(uploadPriceButton);
+        }
+        const buttons = document.querySelectorAll('.btn') 
+        buttons.forEach(function(currentBtn) {
+            let i = 0
+            currentBtn.addEventListener('click', async function() {
+                console.log(receipt[i].NameOfItem + " clicked")
                 await fetchJSON(`api/${apiVersion}/items/bought?itemID=${receipt[i]._id}`, {
                     method: "POST"
                 })
             })
-            receiptDiv.appendChild(button);
-        }
+            i++
+        })
     }catch(error) {
-        throw(error)
-    }
-}
-
-async function buyItem(itemID){
-    try {
-    
-        //document.getElementById(itemID).checked = true
-        console.log("clicked")
-    } catch(error) {
         throw(error)
     }
 }

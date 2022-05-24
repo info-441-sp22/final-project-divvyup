@@ -15,7 +15,6 @@ router.get('/', function(req, res, next) {
   }
   
 });
-
   
 
 export default router;
