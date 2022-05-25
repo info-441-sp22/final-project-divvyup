@@ -5,6 +5,10 @@ import logger from 'morgan';
 import sessions from 'express-session'
 import msIdExpress from 'microsoft-identity-express';
 
+// for building purposes
+import httpProxyMiddlware from 'http-proxy-middleware';
+const createProxyMiddleware = httpProxyMiddlware.createProxyMiddleware
+
 const appSettings = {
     appCredentials: {
         clientId:  "b8ce4802-a8ee-4b0a-8099-9699d750ed30",
@@ -53,7 +57,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/v1', apiv1Router);
 
@@ -73,8 +77,10 @@ app.get('/error', (req, res) => {
     res.send("There was a server error");
 })
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client/build", "index.html"))
-})
+// app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client/build", "index.html"))
+// })
+
+app.use('/*', createProxyMiddleware({ target: 'http://localhost:4001'}));
 
 export default app;
