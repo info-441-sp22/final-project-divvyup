@@ -5,11 +5,10 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   let session = req.session
   if(session.isAuthenticated){
-    res.send(`
-    respond with a resource for the user
-    with the name: ${session.account.name}
-    and the username: ${session.account.username}
-    `);
+    res.json({
+    name: session.account.name,
+    username: session.account.username
+    });
   } else {
     res.send('Error: You must be logged in to see this information')
   }
