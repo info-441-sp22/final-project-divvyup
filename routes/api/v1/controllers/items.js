@@ -44,7 +44,7 @@ router.post('/bought', async function (req, res, next) {
 router.post('/add?', async function (req, res, next) {
     let session = req.session
     try {
-        if(req.session.isAuthenticated == true){
+        if(session.isAuthenticated){
             console.log(req.query.item)
             console.log(req.query.quantity)
             console.log(req.query.tripID)
@@ -80,6 +80,19 @@ router.post('/add?', async function (req, res, next) {
     }
 })
 
+// deleteItem, queryparam: itemID
+router.delete('/delete', async function(req, res, next) {
+    try {
+        let itemID = req.query.itemID
+        let item = await req.models.List.findById(itemID)
+        // didn't do anything yet
+        console.log(item)
+        res.json({status:'success'});
+    } catch(error) {
+        res.status(500).send(error);
+    }
+})
+
 // addPrice, queryparam: itemID, price
 router.post('/addPrice', async function (req, res, next) {
     try {
@@ -104,5 +117,7 @@ router.post('/addPrice', async function (req, res, next) {
         res.status(500).send(error);
     }
 })
+
+
 
 export default router;

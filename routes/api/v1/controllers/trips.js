@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
 router.post('/add', async function(req, res, next){
     let session = req.session
     try {
-        if(req.session.isAuthenticated == true){
+        if(session.isAuthenticated){
             const newTrip = new req.models.Trip({
                 PrimaryUserEmail : session.account.username,
                 ShoppingList: [],
@@ -38,7 +38,7 @@ router.post('/add', async function(req, res, next){
 router.post('/addUser', async function (req, res, next){
     let session = req.session
     try {
-        if(req.session.isAuthenticated == true){
+        if(session.isAuthenticated){
             console.log("start")
             console.log(req.body.tripID)
             let trip = await req.models.Trip.findById(req.body.tripID)
