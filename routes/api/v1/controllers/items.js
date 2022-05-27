@@ -49,11 +49,12 @@ router.post('/add?', async function (req, res, next) {
             console.log(req.query.quantity)
             console.log(req.query.tripID)
             let lists = await req.models.List.find({NameOfItem : req.query.item, tripID : req.query.tripID})
+            console.log(lists)
             if (lists.length == 0) {
                 const shoppinglist = new req.models.List({
                     tripID : req.query.tripID,
                     NameOfItem : req.query.item,
-                    UserEmails : [session.account.username],
+                    UserEmails : {username:session.account.username, quantity:req.query.quantity},
                     Quantity : req.query.quantity,
                     Price : 0,
                     Bought : false
@@ -63,9 +64,25 @@ router.post('/add?', async function (req, res, next) {
                 trip.ShoppingList.push(shoppinglist)
                 await trip.save();
             } else {
-                lists[0].Quantity += parseInt(req.query.quantity)
-                lists[0].UserEmails.push(session.account.username)
-                await lists[0].save()
+                let flag = true
+                for (let i = 0; i < lists[0].UserEmails.length; i++) {
+                    console.log(lists[0].UserEmails[i])
+                    if (lists[0].UserEmails[i].username === session.account.username){
+                        lists[0].UserEmails[i].quantity = parseInt(lists[0].UserEmails[i].quantity) + parseInt(req.query.quantity)
+                        lists[0].Quantity += parseInt(req.query.quantity)
+                        flag = false
+                        await lists[0].save()
+                        console.log("here")
+                        break;
+                    } 
+                }
+                if(flag){
+                    lists[0].Quantity += parseInt(req.query.quantity)
+                    lists[0].UserEmails.push({username:session.account.username, quantity:req.query.quantity})
+                    await lists[0].save()
+                }
+                
+                
             }
             res.json({status:'success'});
         }else{
@@ -85,6 +102,7 @@ router.delete('/delete', async function(req, res, next) {
     try {
         let itemID = req.query.itemID
         let item = await req.models.List.findById(itemID)
+        
         // didn't do anything yet
         console.log(item)
         res.json({status:'success'});

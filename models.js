@@ -21,7 +21,7 @@ async function dbConnect() {
     const listSchema = new mongoose.Schema({
         tripID : String,
         NameOfItem : String,
-        UserEmails : [String],
+        UserEmails : [{username: String, quantity:Number}],
         Quantity : Number,
         Price : Number,
         Bought : Boolean
