@@ -66,18 +66,26 @@ router.post('/addUser', async function (req, res, next){
     }
 })
 
-//this get method returns the session (trip) ID
-// router.get('/tripID', async function(req, res, next){
-//     let session = req.session
-//     let trip = await req.models.Trip.findById(req.query.tripID)
-//     console.log(trip)
-//     try {
-//         res.json({tripID : "12345"})
-//     } catch(error) {
-//         console.log(error)
-//         res.status(500).send(error)
-//     }
-// })
+// this get method returns the session (trip) ID
+router.get('/tripID', async function(req, res, next){
+    try {
+        let session = req.session
+        let trips = await req.models.Trip.find()
+        trips.forEach(trip => {
+            // console.log(trip)
+            for (let i = 0; i < trip.Users.length; i++) {
+                if (trip.Users[i].includes(session.account.username)) {
+                    console.log(trip._id)
+                    res.json({tripID: trip._id})
+                }
+            }
+        });
+        // res.json({tripID: null})
+    } catch(error) {
+        console.log(error)
+        res.status(500).send(error)
+    }
+})
 
 // this delete method removes a trip from the mongoDB database
 router.delete('/delete', async function(req, res, next){
