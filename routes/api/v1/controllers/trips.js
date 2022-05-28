@@ -3,7 +3,6 @@ var router = express.Router();
 
 router.get('/', async function(req, res, next) {
     try {
-        
         res.send("hello")
     } catch (error) {
         res.status(500).send(error)
@@ -102,11 +101,46 @@ router.delete('/delete', async function(req, res, next){
             }
             }else{
                 res.status(401).json({
-                    tatus: "error",
+                    status: "error",
                     error: "not logged in"
                 })
             }
     } catch (error) {
+        console.log(error)
+        res.status(500).send(error);
+    }
+})
+
+router.get('/subtotal', async (req,res,next) => {
+    try{
+        let tripID = req.query.tripID
+        let trip = await req.models.Trip.findById(tripID)
+        if(trip.PrimaryUserEmail === req.session.account.username){
+            let items = await req.models.List.find({tripID : tripID})
+            let result = []
+            console.log(trip)
+            trip.Users.forEach(async (user) => {
+                let subtotal = 0;
+                console.log(user)
+                items.forEach(item => {
+                    item.UserEmails.forEach(userJson => {
+                        if(userJson.username === user[0]){
+                            console.log(item.NameOfItem, item.Quantity, item.Price)
+                            subtotal += parseInt(userJson.quantity) / parseInt(item.Quantity) * parseInt(item.Price)
+                        }
+                    })
+                })
+                result.push({username: user[1], subtotal: subtotal.toFixed(2)})
+            })
+            console.log(result)
+            res.json(result)
+        }else{
+            res.status(401).json({
+                status: "error",
+                error: "not the primary purchaser"
+            })
+        }
+    }catch(error){
         console.log(error)
         res.status(500).send(error);
     }

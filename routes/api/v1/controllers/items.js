@@ -127,11 +127,10 @@ router.delete('/delete', async function(req, res, next) {
 // addPrice, queryparam: itemID, price
 router.post('/addPrice', async function (req, res, next) {
     try {
-        if(req.session.isAuthenticated == true){
+        if(req.session.isAuthenticated){
             let tripID = req.query.tripID
-            //Only allow price upload if it's the primary user
             let trip = await req.models.Trip.findById(tripID)
-            if(trip.PrimaryUserEmail === session.account.username){
+            if(trip.PrimaryUserEmail === req.session.account.username){
                 let lists = await req.models.List.findById(req.query.itemID)
                 let price = req.query.price
                 lists.Price = price

@@ -24,7 +24,6 @@ async function dbConnect() {
         UserEmails : [{username: String, quantity:Number}],
         Quantity : Number,
         Price : Number,
-        Bought : Boolean
     })
     models.List = mongoose.model("List", listSchema)
 
