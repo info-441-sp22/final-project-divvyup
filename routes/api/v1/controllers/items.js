@@ -80,9 +80,7 @@ router.post('/add?', async function (req, res, next) {
                     lists[0].Quantity += parseInt(req.query.quantity)
                     lists[0].UserEmails.push({username:session.account.username, quantity:req.query.quantity})
                     await lists[0].save()
-                }
-                
-                
+                } 
             }
             res.json({status:'success'});
         }else{
@@ -101,9 +99,24 @@ router.post('/add?', async function (req, res, next) {
 router.delete('/delete', async function(req, res, next) {
     try {
         let itemID = req.query.itemID
+        console.log(itemID)
         let item = await req.models.List.findById(itemID)
-        
-        // didn't do anything yet
+        console.log(item)
+        let username = req.session.account.username
+        for (let i = 0; i < item.UserEmails.length; i++) {
+            console.log(item.UserEmails[i])
+            if (item.UserEmails[i].username === username){
+                console.log(item.UserEmails[i])
+                item.Quantity = item.Quantity - parseInt(item.UserEmails[i].quantity)
+                item.UserEmails.splice(i,1)
+                if(item.Quantity==0){
+                    await req.models.List.deleteOne({_id:itemID})
+                }
+                await item.save()
+                console.log("here")
+                break;
+            } 
+        }
         console.log(item)
         res.json({status:'success'});
     } catch(error) {
