@@ -82,7 +82,7 @@ router.get('/tripID', async function(req, res, next){
         // res.json({tripID: null})
     } catch(error) {
         console.log(error)
-        res.status(500).send(error)
+
     }
 })
 
