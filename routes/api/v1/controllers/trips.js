@@ -197,12 +197,12 @@ router.get('/userStatus', async(req,res,next) => {
             }
             if(flag){
                 console.log("about to redirect")
-                // res.redirect("/shoppingpage")
-                window.location.href = "/shoppingpage"
+                res.redirect("/shoppingpage")
+                // window.location.href = "/shoppingpage"
                 return
             }else{
-                // res.redirect('/')
-                window.location.href="/"
+                res.redirect('/')
+                // window.location.href="/"
                 return
             }
         } 
