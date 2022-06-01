@@ -76,6 +76,24 @@ app.get('/error', (req, res) => {
     res.type('txt')
     res.send("There was a server error");
 })
+// app.get('/applesauce', async (req, res) => {
+//     await fetch(`api/${apiVersion}/trips/userStatus`)
+//         .then(response => {
+//             response.json().then((data) => {
+//                 if(data.tripID!=null){
+//                     res.status(301).redirect('/shoppingpage')
+//                     // next()
+//                 }else{
+//                     res.status(301).redirect('/')
+//                     // next()
+//                 }
+//             }).catch((err) => {
+//                 console.log(err)
+//             })
+//         })
+//     // res.type('txt')
+//     // res.send("poop")
+// })
 
 // app.get('*', (req, res) => {
 //     res.sendFile(path.resolve(__dirname, "client/build", "index.html"))

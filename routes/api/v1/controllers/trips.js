@@ -24,7 +24,7 @@ router.post('/add', async function(req, res, next){
             res.json({status:'success', ID: newTrip._id});
         }else{
             res.status(401).json({
-                tatus: "error",
+                status: "error",
                 error: "not logged in"
             })
         }   
@@ -56,7 +56,7 @@ router.post('/addUser', async function (req, res, next){
             res.json({status:'success'});
         }else{
             res.status(401).json({
-                tatus: "error",
+                status: "error",
                 error: "not logged in"
             })
         }
@@ -92,12 +92,21 @@ router.delete('/delete', async function(req, res, next){
     try {
         if(req.session.isAuthenticated == true){
             let tripID = req.query.tripID
-            //Only allow deletion if it's the primary user
             let trip = await req.models.Trip.findById(tripID)
             if(trip.PrimaryUserEmail === session.account.username){
                 await req.models.List.deleteMany({tripID : tripID})
                 await req.models.Trip.deleteOne({_id:tripID})
-                res.json({status:'success'});
+            }else{
+               for(let i = 0; i < trip.Users.length; i++){
+                console.log(trip.Users[i][0])
+                if(trip.Users[i][0] === session.account.username){
+                    console.log("found user")
+                    trip.Users.splice(i,1);
+                    await trip.save()
+                    break;
+                }
+            }
+            res.json({status:'success'}) 
             }
             }else{
                 res.status(401).json({
@@ -111,6 +120,27 @@ router.delete('/delete', async function(req, res, next){
     }
 })
 
+// router.delete('/deleteUser', async function(req, res, next){
+//     let session = req.session
+//     try {
+//         if(req.session.isAuthenticated == true){
+//             let tripID = req.query.tripID
+//             let trip = await req.models.Trip.findById(tripID)
+            
+//             res.json({status:'success'});
+//             }else{
+//                 res.status(401).json({
+//                     status: "error",
+//                     error: "not logged in"
+//                 })
+//             }
+//     } catch (error) {
+//         console.log(error)
+//         res.status(500).send(error);
+//     }
+// })
+
+
 router.get('/subtotal', async (req,res,next) => {
     try{
         let tripID = req.query.tripID
@@ -119,7 +149,7 @@ router.get('/subtotal', async (req,res,next) => {
             let items = await req.models.List.find({tripID : tripID})
             let result = []
             console.log(trip)
-            trip.Users.forEach(async (user) => {
+            trip.Users.forEach((user) => {
                 let subtotal = 0;
                 console.log(user)
                 items.forEach(item => {
@@ -143,6 +173,41 @@ router.get('/subtotal', async (req,res,next) => {
     }catch(error){
         console.log(error)
         res.status(500).send(error);
+    }
+})
+
+router.get('/userStatus', async(req,res,next) => {
+    try{
+        if (!req.session.isAuthenticated) {
+            res.redirect("/")
+        } else {
+            let flag = false;
+            let trips = await req.models.Trip.find()
+            for(let i = 0; i < trips.length; i++){
+                for(let j = 0; j < trips[i].Users.length; j++){
+                    if(trips[i].Users[j][0] === req.session.account.username){
+                        console.log("found user")
+                        flag = true;
+                        break;
+                    }
+                }
+                if(flag){
+                    break;
+                }
+            }
+            if(flag){
+                console.log("about to redirect")
+                // res.redirect("/shoppingpage")
+                window.location.href = "/shoppingpage"
+                return
+            }else{
+                // res.redirect('/')
+                window.location.href="/"
+                return
+            }
+        } 
+    }catch(error){
+        throw(error)
     }
 })
 
