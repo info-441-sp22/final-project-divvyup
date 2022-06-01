@@ -179,7 +179,7 @@ router.get('/subtotal', async (req,res,next) => {
 router.get('/userStatus', async(req,res,next) => {
     try{
         if (!req.session.isAuthenticated) {
-            res.redirect("/")
+            res.redirect("/mainpage")
         } else {
             let flag = false;
             let trips = await req.models.Trip.find()
@@ -197,12 +197,10 @@ router.get('/userStatus', async(req,res,next) => {
             }
             if(flag){
                 console.log("about to redirect")
-                // res.redirect("/shoppingpage")
-                window.location.href = "/shoppingpage"
+                res.redirect("/shoppingpage")
                 return
             }else{
-                // res.redirect('/')
-                window.location.href="/"
+                res.redirect('/mainpage')
                 return
             }
         } 
