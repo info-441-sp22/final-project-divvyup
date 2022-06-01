@@ -14,6 +14,16 @@ router.get('/', function(req, res, next) {
   }
   
 });
+
+// router.get('/loggedIn', function(req, res, next) {
+//   let session = req.session
+//   if(session.isAuthenticated){
+//       return(true);
+//   } else {
+//     return(false);
+//   }
+  
+// });
   
 
 export default router;
