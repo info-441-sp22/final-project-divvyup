@@ -10,10 +10,23 @@ router.get('/', function(req, res, next) {
     username: session.account.username
     });
   } else {
-    res.send('Error: You must be logged in to see this information')
+    res.json({
+    name: null,
+    username: null
+    })
   }
   
 });
+
+// router.get('/loggedIn', function(req, res, next) {
+//   let session = req.session
+//   if(session.isAuthenticated){
+//       return(true);
+//   } else {
+//     return(false);
+//   }
+  
+// });
   
 
 export default router;
