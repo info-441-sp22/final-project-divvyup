@@ -61,7 +61,11 @@ router.post('/addUser', async function (req, res, next){
             })
         }
     } catch(error) {
-        res.status(500).send(error);
+        // res.status(500).send(error);
+        res.status(500).json( {
+            status: "error",
+            error: "ID does not exist"
+        })
     }
 })
 
