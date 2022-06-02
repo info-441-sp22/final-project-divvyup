@@ -1,0 +1,91 @@
+.ShoppingPage_container {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.ShoppingPage {
+    width: 60%;
+    /* display: flex;
+    align-items: center; */
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.ShoppingPage_joinDetail {
+    display: flex;
+    color: #00318d;
+    font-weight: bold;
+    font-size: 1.25em;
+    margin-bottom: 30px
+}
+
+.ShoppingPage_userDetail {
+    display: flex;
+    color: #00318d;
+    font-weight: bold;
+    font-size: 1.25em;
+    margin-bottom: 10px
+}
+
+#Username {
+    color:dimgrey;
+    font-weight: 400;
+    font-size: 2em;
+}
+
+#tripID {
+    color:dimgrey;
+    font-weight: 400;
+    font-size: 1.25m;
+}
+
+.ShoppingPage_inputDetail {
+    display: flex;
+}
+
+#addItemButton {
+    margin-right: 1em;
+    background-color:#00318d;
+}
+
+#refreshListButton {
+    background-color: #00318d;
+}
+
+#itemNameInput {
+   width: 25em;
+   margin-right: 1em;
+}
+#itemqQuantityInput {
+    width: 5em;
+}
+
+.ShoppingPage_buttonDetail {
+     margin-top: 15px;
+ }
+
+.shoppingList {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.items {
+    margin-top: 15px;
+    display:flex;
+}
+
+#quitGroup {
+    margin-top: 15px;
+}
+
+.inputItems {
+    display: flex;
+    width: 80%;
+}
+
+.itemName {
+    width: 20%;
+}

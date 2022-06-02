@@ -1,12 +1,12 @@
 import React from 'react'
-import './about.css'
-import { Navbar } from 'reactstrap'
+import './About.css'
 
-function ShoppingPage() {
+function about() {
   return (
     <div className='about'>
 
-
+    <h1>Meet the Team!</h1>
+    
 
     </div>
   )

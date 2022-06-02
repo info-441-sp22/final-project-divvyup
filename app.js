@@ -16,8 +16,8 @@ const appSettings = {
         clientSecret:  "aNj8Q~XtyEaiJ0L133egITGpBzUmB1NdnUUOsaZv"
     },
     authRoutes: {
-        redirect: "http://localhost:3000/redirect",
-        //redirect: "https://www.{website name}/redirect",
+        //redirect: "http://localhost:3000/redirect",
+        redirect: "https://www.marquito.me/redirect",
         error: "/error",
         unauthorized: "/unauthorized"
     }
@@ -66,7 +66,7 @@ app.get('/signin',
 )
 app.get('/signout',
     // this might break later, change to website domain
-    msid.signOut({postLogoutRedirect: '/'})
+    msid.signOut({postLogoutRedirect: 'https://www.marquito.me/'})
 )
 app.get('/unauthorized', (req, res) => {
     res.type('txt')
@@ -95,10 +95,10 @@ app.get('/error', (req, res) => {
 //     // res.send("poop")
 // })
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client/build", "index.html"))
-// })
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client/build", "index.html"))
+})
 
-app.use('/*', createProxyMiddleware({ target: 'http://localhost:4001'}));
+//app.use('/*', createProxyMiddleware({ target: 'http://localhost:4001'}));
 
 export default app;
