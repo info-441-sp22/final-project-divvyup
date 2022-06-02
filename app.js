@@ -17,7 +17,7 @@ const appSettings = {
     },
     authRoutes: {
         //redirect: "http://localhost:3000/redirect",
-        redirect: "https://www.jjosan.me/redirect",
+        redirect: "https://www.marquito.me/redirect",
         error: "/error",
         unauthorized: "/unauthorized"
     }
@@ -66,7 +66,7 @@ app.get('/signin',
 )
 app.get('/signout',
     // this might break later, change to website domain
-    msid.signOut({postLogoutRedirect: 'https://www.jjosan.me/'})
+    msid.signOut({postLogoutRedirect: 'https://www.marquito.me/'})
 )
 app.get('/unauthorized', (req, res) => {
     res.type('txt')
