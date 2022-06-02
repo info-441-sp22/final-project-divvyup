@@ -5,8 +5,8 @@ import RedirectPage from './Components/RedirectPage/RedirectPage'
 import MainPage from './Components/MainPage/MainPage';
 import ShoppingPage from './Components/ShoppingPage/ShoppingPage';
 import MyNavbar from './Components/MyNavbar/MyNavbar.js';
-
 import HowTo from './Components/HowTo/HowTo';
+
 function App() {
   
   return (

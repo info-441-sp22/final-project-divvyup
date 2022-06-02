@@ -32,8 +32,7 @@ function MyNavbar() {
           <NavItem><NavLink href="/">Home</NavLink></NavItem>
 
           <NavItem><NavLink href="/HowTo">How to use</NavLink></NavItem>
-
-          <NavItem><NavLink href="/about">About Us</NavLink></NavItem>
+          
            {test ?
             <NavItem><NavLink href='signout'>Sign Out</NavLink></NavItem>
            :
