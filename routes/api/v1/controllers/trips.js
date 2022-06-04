@@ -143,7 +143,7 @@ router.delete('/delete', async function(req, res, next){
 //     }
 // })
 
-
+// this endpoint method calculates subtotal
 router.get('/subtotal', async (req,res,next) => {
     try{
         let tripID = req.query.tripID
@@ -179,6 +179,7 @@ router.get('/subtotal', async (req,res,next) => {
     }
 })
 
+// this endpoint method checks userStatus 
 router.get('/userStatus', async(req,res,next) => {
     try{
         if (!req.session.isAuthenticated) {
