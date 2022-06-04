@@ -4,6 +4,7 @@ let models = {}
 
 dbConnect()
 
+// connecting to MongoDB database and creating data schema
 async function dbConnect() {
     console.log("trying to connect to mongodb database")
     await mongoose.connect("mongodb+srv://user0:password0@cluster0.dqu4m.mongodb.net/finalproject?retryWrites=true&w=majority")
