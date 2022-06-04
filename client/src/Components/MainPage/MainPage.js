@@ -1,11 +1,22 @@
-import React, {useState} from 'react'
+import React, {useState, Suspense} from 'react'
 import './MainPage.css'
 import {Button, Input, Modal, ModalBody, ModalFooter} from 'reactstrap'
 import { Link, useNavigate } from 'react-router-dom'
 // import {displayError} from '../Utils/utils.js'
-
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import { Canvas, useLoader, useFrame } from "@react-three/fiber";
 const apiVersion = "v1"
-
+const Scene = () => {
+    const cart = useLoader(FBXLoader, "cart.fbx");
+    cart.rotation.x = .5;
+    
+    useFrame(({clock}) => {
+      const a = clock.getElapsedTime();
+      cart.rotation.y = a;
+      cart.position.z = Math.sin(a)
+    })
+    return <primitive object={cart} scale={0.02} />;
+  };
 
 function MainPage() {
     let navigate = useNavigate();
@@ -42,6 +53,13 @@ function MainPage() {
                         </ModalFooter>
                     </Modal>
                 </div>
+                <div className='display'>
+      <Canvas>
+          <Suspense fallback={null}>
+              <Scene />
+          </Suspense>
+      </Canvas>
+    </div>
             </div>
                 
             {/* server blows up if the same person makes more than 1 trip */}

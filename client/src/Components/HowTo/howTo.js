@@ -1,20 +1,5 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './HowTo.css'
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import { Canvas, useLoader, useFrame } from "@react-three/fiber";
-
-const Scene = () => {
-  const cart = useLoader(FBXLoader, "cart.fbx");
-  cart.rotation.x = .5;
-  
-  useFrame(({clock}) => {
-    const a = clock.getElapsedTime();
-    cart.rotation.y = a;
-    cart.position.z = Math.sin(a)
-  })
-  return <primitive object={cart} scale={0.02} />;
-};
-
 
 function HowTo() {
   return (
@@ -42,13 +27,7 @@ function HowTo() {
             to build this app to help alleviate this issue for ourselves and for others.
 
 </p>
-    <div className='display'>
-      <Canvas>
-          <Suspense fallback={null}>
-              <Scene />
-          </Suspense>
-      </Canvas>
-    </div>
+
         
     </div>
   )

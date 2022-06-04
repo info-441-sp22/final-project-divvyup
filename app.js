@@ -16,8 +16,8 @@ const appSettings = {
         clientSecret:  "aNj8Q~XtyEaiJ0L133egITGpBzUmB1NdnUUOsaZv"
     },
     authRoutes: {
-        //redirect: "http://localhost:3000/redirect",
-        redirect: "https://www.marquito.me/redirect",
+        redirect: "http://localhost:3000/redirect",
+        // redirect: "https://www.marquito.me/redirect",
         error: "/error",
         unauthorized: "/unauthorized"
     }
@@ -66,7 +66,7 @@ app.get('/signin',
 )
 app.get('/signout',
     // this might break later, change to website domain
-    msid.signOut({postLogoutRedirect: 'https://www.marquito.me/'})
+    msid.signOut({postLogoutRedirect: '/'})
 )
 app.get('/unauthorized', (req, res) => {
     res.type('txt')
